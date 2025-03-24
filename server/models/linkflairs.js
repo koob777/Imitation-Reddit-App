@@ -1,0 +1,1 @@
+// LinkFlair Document Schema

@@ -1,0 +1,1 @@
+// Community Document Schema
