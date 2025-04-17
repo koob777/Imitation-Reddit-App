@@ -1,0 +1,54 @@
+
+.new-community-page {
+    height: calc(100% - 61px);
+    left: 270px;
+    right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    bottom: 0;
+    position: fixed;
+    background-color: #ffffff;
+    overflow: auto;
+}
+
+.label-info {
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 6px;
+}
+
+.engender-community-button {
+    margin: 10px;
+    border: none;
+    padding: 16px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.engender-community-button:hover {
+    text-decoration: underline;
+}
+
+.new-community-name {
+    width: 100%;
+    padding: 7px;
+}
+
+.new-community-descr {
+    width: 100%;
+    height: 180px;
+    padding: 7px;
+}
+
+.new-community-creator {
+    width: 100%;
+    padding: 7px;
+}
+
+.red-text {
+    color: red;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 4px;
+}
