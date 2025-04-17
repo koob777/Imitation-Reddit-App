@@ -74,7 +74,6 @@ export default function NewCommunitypage({ submitcommunity, goToCommunityPage, c
 
             //maybe combine both into one
             submitcommunity(newCommunity);
-            goToCommunityPage(newCommunity);
         }
     };
 
