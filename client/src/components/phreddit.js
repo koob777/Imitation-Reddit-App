@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
-import Model from '../models/model.js';
 import Banner from './Banner.js';
 import NavBar from './NavBar.js';
 import Homepage from './Homepage.js';
@@ -11,50 +10,68 @@ import NewCommunitypage from './NewCommunitypage.js';
 import NewPostpage from './NewPostpage.js';
 import NewCommentpage from './NewCommentpage.js';
 
-export default function Phreddit() {
-    const [msg, setMsg] = useState("");
+// export default function Phreddit() {
+//     const [msg, setMsg] = useState("");
     
-    useEffect(() => {
-        axios.get("http://127.0.0.1:8000/")
-        .then((res) => {
-            setMsg(res.data);
-        })
-        .catch((err) => {
-            console.log("Request failed");
-        });
-    }, []);
+//     useEffect(() => {
+//         axios.get("http://127.0.0.1:8000/")
+//         .then((res) => {
+//             setMsg(res.data);
+//         })
+//         .catch((err) => {
+//             console.log("Request failed");
+//         });
+//     }, []);
     
-    /* 
-    home-page
-    search-page
-    community-page
-    post-page
-    new-post-page
-    new-community-page
-    new-comment-page
-    */
+//     /* 
+//     home-page
+//     search-page
+//     community-page
+//     post-page
+//     new-post-page
+//     new-community-page
+//     new-comment-page
+//     */
 
-  return (
-    <h1> {msg} </h1>
-  );
-}
+//   return (
+//     <h1> {msg} </h1>
+//   );
+// }
 
 //REMINDER EVERYTHING BELOW *will not* WORK BECAUSE ITS RUNNING ON AN INSTANCE OF Model(), WHICH DOES NOT EXIST HERE
 //EVEYRYTHING BELOW HAS TO BE MODIFIED TO FIT DATABASE RETRIEVALS AND DATABASE PUSHES
 
 export default function Phreddit() {
-  const model = new Model();
 
   //CHANGE VERY SINGLE MODEL.DATA TO A STATE VERSION, DO IT FOR COMMENTS, POSTS, AND LINKFLAIRS, AND CHANGE THE INSERITON FOR THESE THINGS
   //using state on model so that react rerender whenever something new is added
   //when we connect to mongoose/databases, we're going to have to rewrite eveyrthing related to 'data', especially pushing new things into the arrays
 
-  const [dataCommunities, setCommunities] = useState(model.data.communities);
-  const [dataPosts, setPosts] = useState(model.data.posts);
-  const [dataComments, setComments] = useState(model.data.comments);
-  const [dataLinkflairs, setLinkflairs] = useState(model.data.linkFlairs);
-
+  const [dataCommunities, setCommunities] = useState([]);
+  const [dataPosts, setPosts] = useState([]);
+  const [dataComments, setComments] = useState([]);
+  const [dataLinkflairs, setLinkflairs] = useState([]);
   const [currentview, setview] = useState({ view: 'home' });
+   //fetch data
+   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [commsRes, postsRes, commentsRes, flairsRes] = await Promise.all([
+          axios.get('http://localhost:8000/communities'),
+          axios.get('http://localhost:8000/posts'),
+          axios.get('http://localhost:8000/comments'),
+          axios.get('http://localhost:8000/linkflairs')
+        ]);
+        setCommunities(commsRes.data);
+        setPosts(postsRes.data);
+        setComments(commentsRes.data);
+        setLinkflairs(flairsRes.data);
+      } catch (err) {
+        console.error('Error fetching data: ', err);
+      }
+    };
+    fetchData();
+   }, []);
 
   const goingtoPostPage = (post) => {
     setview({view: 'post', post });
