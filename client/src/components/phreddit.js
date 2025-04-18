@@ -144,45 +144,46 @@ export default function Phreddit() {
 
   };
   
-  let submittingcomment = (newcomment, parentID, isreplyToComment, sourcepost) => {
+  let submittingcomment = (newcomment, parentID, isReplyToComment, sourcepost) => {
     //const updatedcomments = [...dataComments, newcomment];
-    let pcomm = dataComments.find(c => c.commentID === parentID);
-    let ppost = dataPosts.find(p => p.postID === parentID);
+    let pcomm = dataComments.find(c => c._id === parentID);
+    let ppost = dataPosts.find(p => p._id === parentID);
+    let updatedComments, updatedPosts;
 
     if (pcomm) { //THIS MEANS THAT YOU ARE REPLYING TO A COMMENT
       console.log('parentcomment');
-      let parentcomment = dataComments.find(c => c.commentID === parentID);
+      let parentcomment = dataComments.find(c => c._id === parentID);
       if (!parentcomment) {
         console.log('parentcomment');
         return
       };
-      let updatecomments = [...dataComments];
-      updatecomments = updatecomments.filter(c => c.commentID !== parentID);
-      parentcomment.commentIDs.push(newcomment.commentID);
-      updatecomments.push(parentcomment);
-      updatecomments.push(newcomment);
+      updatedComments = [...dataComments];
+      updatedComments = updatedComments.filter(c => c._id !== parentID);
+      parentcomment.commentIDs.push(newcomment._id);
+      updatedComments.push(parentcomment);
+      updatedComments.push(newcomment);
 
-      setComments(updatecomments);
+      setComments(updatedComments);
       setview({ view: 'post', post: sourcepost });
     }
     if (ppost) { //THIS MEANS THAT YOU ARE COMMENTING ON A POST
       console.log('parentpost');
-      let parentpost = dataPosts.find(p => p.postID === parentID);
+      let parentpost = dataPosts.find(p => p._id === parentID);
       if (!parentpost) {
         console.log('parentpost');
         return
       };
-      let updatedposts = [...dataPosts];
-      updatedposts = updatedposts.filter(p => p.postID !== parentID);
-      parentpost.commentIDs.push(newcomment.commentID);
-      updatedposts.push(parentpost);
+      updatedPosts = [...dataPosts];
+      updatedPosts = updatedPosts.filter(p => p._id !== parentID);
+      parentpost.commentIDs.push(newcomment._id);
+      updatedPosts.push(parentpost);
 
-      setPosts(updatedposts);
+      setPosts(updatedPosts);
 
-      let updatecomments = [...dataComments];
-      updatecomments.push(newcomment);
+      updatedComments = [...dataComments];
+      updatedComments.push(newcomment);
 
-      setComments(updatecomments);
+      setComments(updatedComments);
       setview({ view: 'post', post: parentpost });
     }
     
@@ -240,7 +241,7 @@ export default function Phreddit() {
       break;
     case 'new-comment':
       maincontent = (
-        <NewCommentpage isReplyToComment={currentview.isreplyToComment} parentID={currentview.parentID} submitcomment={submittingcomment} sourcepost={currentview.sourcepost}/>
+        <NewCommentpage isReplyToComment={currentview.isReplyToComment} parentID={currentview.parentID} submitcomment={submittingcomment} sourcepost={currentview.sourcepost}/>
       );
       break;
     default:
