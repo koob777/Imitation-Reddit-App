@@ -18,7 +18,7 @@ export default function Postpage({ post, communities, linkflairs, comments, incr
     }
     postcomments.sort((a,b) => new Date(b.commentedDate) - new Date(a.commentedDate));
 
-    const flair = linkflairs.find(f => f.linkFlairID === post.linkFlairID);
+    const flair = linkflairs.find(f => f._id === post.linkFlairID);
     const community = communities.find(c => c.postIDs.includes(post._id));
 
     return (
@@ -37,8 +37,8 @@ export default function Postpage({ post, communities, linkflairs, comments, incr
 
             {flair && <div className="post-link-flair">{flair.content}</div>}
 
-            <p className="post-content" >
-                {post.content}
+            <p className="post-content" dangerouslySetInnerHTML={{ __html: post.content }}>
+                
             </p>
 
             <div className="post-num-viewscomms">
@@ -53,7 +53,7 @@ export default function Postpage({ post, communities, linkflairs, comments, incr
 
             <div className="comment-list">
                 {postcomments.map(comm => 
-                    <Comment key={comm.commentID} comment={comm} comments={comments} level={0} goToNewCommentPage={goToNewCommentPage} post={post}/>
+                    <Comment key={comm._id} comment={comm} comments={comments} level={0} goToNewCommentPage={goToNewCommentPage} post={post}/>
                 )}
             </div>
         </div>
@@ -76,8 +76,8 @@ function Comment({ comment, comments, goToNewCommentPage, level, post }) {
                 {comment.commentedBy} | {formatDate(comment.commentedDate)}
             </div>
 
-            <div className="comment-content">
-                {comment.content}
+            <div className="comment-content" dangerouslySetInnerHTML={{ __html: comment.content }}>
+                
             </div>
 
             <button className="reply-button" onClick={() => goToNewCommentPage(comment._id, true, post)}>
@@ -87,7 +87,7 @@ function Comment({ comment, comments, goToNewCommentPage, level, post }) {
             <hr />
 
             {replies.map(reply => 
-                <Comment key={reply.commentID} comment={reply} comments={comments} goToNewCommentPage={goToNewCommentPage} level={level + 1} post={post}/>
+                <Comment key={reply._id} comment={reply} comments={comments} goToNewCommentPage={goToNewCommentPage} level={level + 1} post={post}/>
             )}
 
         </div>

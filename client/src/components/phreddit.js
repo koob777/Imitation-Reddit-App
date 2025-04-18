@@ -90,7 +90,21 @@ export default function Phreddit() {
   //   setview({...currentview});
   // }
 
-  const increaseViewCount = (post) => {
+  const increaseViewCount = async (post) => {
+    try {
+      await axios.post('http://localhost:8000/increaseviewcount', {
+        postid: post._id
+      });
+      const updattedposts = await axios.get('http://localhost:8000/posts');
+      setPosts(updattedposts.data);
+      const samepost = updattedposts.data.find(p => p._id === post._id);
+      setview({ view: 'post', post: samepost });
+    }
+    catch (err) {
+      console.error('Error fetching posts: ', err);
+    }
+
+    /*
     const updatedposts = dataPosts.map(p => {
       if (p.postID === post.postID || p._id === post._id) {
         return { ...p, views: p.views + 1 };
@@ -99,13 +113,27 @@ export default function Phreddit() {
     });
     setPosts(updatedposts);
     setview({ ...currentview });
+    */
   };
   
   const goingtoNewCommentPage = (parentID, isReplyToComment, sourcepost) => {
     setview({view: 'new-comment', parentID, isReplyToComment, sourcepost});
   };
 
-  const submittingPost = (newpost, newflair, selectedcommunity) => {
+  const submittingPost = async (newpost, newflair, selectedcommunity) => {
+    try {
+      const updattedcommunities = await axios.get('http://localhost:8000/communities');
+      setCommunities(updattedcommunities.data);
+      const updattedposts = await axios.get('http://localhost:8000/posts');
+      setPosts(updattedposts.data);
+      const updattedlifs = await axios.get('http://localhost:8000/linkflairs');
+      setLinkflairs(updattedlifs.data);
+      setview({view : 'home'});
+    }
+    catch (err) {
+      console.error('Error fetching posts: ', err);
+    }
+    /* 
     //model.data.posts.push(newpost);
     let updatedposts = [...dataPosts, newpost];
     setPosts(updatedposts);
@@ -123,6 +151,7 @@ export default function Phreddit() {
       //model.data.linkFlairs.push(newflair);
     }
     setview({view: 'home'});
+    */
   };
 
   const submittingcommunity = async (newcommunity) => {
@@ -144,8 +173,22 @@ export default function Phreddit() {
 
   };
   
-  let submittingcomment = (newcomment, parentID, isReplyToComment, sourcepost) => {
+  let submittingcomment = async (newcomment, parentID, isReplyToComment, sourcepost) => {
+    try {
+      const updattedcomments = await axios.get('http://localhost:8000/comments');
+      const updattedposts = await axios.get('http://localhost:8000/posts');
+      setComments(updattedcomments.data);
+      setPosts(updattedposts.data);
+
+      const source_post_grabbed_straight_from_the_database = updattedposts.data.find(p => p.title === sourcepost.title);
+
+      setview({ view: 'post', post: source_post_grabbed_straight_from_the_database });
+    }
+    catch (err) {
+      console.error('Error fetching comments: ', err);
+    }
     //const updatedcomments = [...dataComments, newcomment];
+    /* 
     let pcomm = dataComments.find(c => c._id === parentID);
     let ppost = dataPosts.find(p => p._id === parentID);
     let updatedComments, updatedPosts;
@@ -186,6 +229,7 @@ export default function Phreddit() {
       setComments(updatedComments);
       setview({ view: 'post', post: parentpost });
     }
+    */
     
   };
   

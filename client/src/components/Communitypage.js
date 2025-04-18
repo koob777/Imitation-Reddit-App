@@ -43,7 +43,12 @@ export default function Communitypage({ community, linkflairs, posts, comments, 
                 </div>
             </div>
 
-            <p className="community-description">{community.description}</p>
+            <div className="community-description">
+                <p dangerouslySetInnerHTML={{ __html: community.description }}>
+
+                </p>
+            </div>
+
             <p className="community-age">Created {formatDate(community.startDate)}</p>
             <p className="community-post-count">{communityposts.length} posts | {community.memberCount} members</p>
 
@@ -67,7 +72,7 @@ export default function Communitypage({ community, linkflairs, posts, comments, 
                     };
 
                     return (
-                        <a key={post.postID} className="post-listing" onClick={() => goToPostPage(post)} href="#">
+                        <a key={post._id} className="post-listing" onClick={() => goToPostPage(post)} href="#">
                             <div className="post-meta">
                                 {post.postedBy} | {formatDate(post.postedDate)}
                             </div>
