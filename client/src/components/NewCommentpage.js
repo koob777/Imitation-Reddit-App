@@ -1,14 +1,15 @@
 import { useState } from "react";
 import '../stylesheets/NewCommentpage.css';
+import axios from "axios";
 
-export default function NewCommentpage({ isreplyToComment, parentID, submitcomment, sourcepost }) {
+export default function NewCommentpage({ isReplyToComment, parentID, submitcomment, sourcepost }) {
     const [content, setContent] = useState('');
     const [username, setUsername] = useState('');
 
     const [contentError, setContentError] = useState('');
     const [usernameError, setUsernameError] = useState('');
 
-    let checkinputs = (e) => {
+    let checkinputs = async (e) => {
         e.preventDefault();
         setContentError('');
         setUsernameError('');
@@ -51,16 +52,24 @@ export default function NewCommentpage({ isreplyToComment, parentID, submitcomme
 
         if (passed) {
             let newcomment = {
-                commentID: "comment" + (Math.floor(Math.random() * 1000) + 10),
                 content: output,
                 commentIDs: [],
                 commentedBy: username,
                 commentedDate: new Date(),
             }
 
-            submitcomment(newcomment, parentID, isreplyToComment, sourcepost);
+            submitcomment(newcomment, parentID, isReplyToComment, sourcepost);
             setContent('');
             setUsername('');
+            try {
+                await axios.post('http://localhost:8000/comments', {
+                    ...newcomment,
+                    isReplyToComment,
+                    parentID
+                });
+            } catch (err) {
+                console.error("Failed to create comment", err);
+            } 
         }
     };
 
