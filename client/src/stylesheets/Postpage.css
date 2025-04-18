@@ -1,0 +1,84 @@
+.post-page {
+    height: calc(100% - 61px);
+    left: 270px;
+    right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    bottom: 0;
+    position: fixed;
+    background-color: #ffffff;
+    overflow: auto;
+}
+
+.post-community-time {
+    font-size: 16px;
+    padding: 5px;
+}
+
+.post-username {
+    font-size: 16px;
+    padding: 5px;
+}
+
+.post-title {
+    margin: 5px;
+    color: #ff4500;
+}
+
+.post-link-flair {
+    margin: 5px;
+    color: gray;
+}
+
+.post-content {
+    margin: 10px;
+    font-size: 18px;
+}
+
+.post-num-viewscomms {
+    margin: 5px;
+    color: gray;
+}
+
+.comment-button {
+    margin: 10px;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.comment-button:hover {
+    text-decoration: underline;
+}
+
+.comment-list {
+    margin-top: 20px;
+}
+
+.comment-format {
+    margin: 10px;
+}
+
+.comment-header {
+    font-size: 16px;
+    padding: 3px;
+    color: gray;
+}
+
+.comment-content {
+    font-size: 16px;
+    padding: 4px;
+}
+
+.reply-button {
+    margin: 6px;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.reply-button:hover {
+    text-decoration: underline;
+}

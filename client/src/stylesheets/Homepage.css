@@ -1,0 +1,114 @@
+.home-page {
+    height: calc(100% - 61px);
+    left: 270px;
+    right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    bottom: 0;
+    position: fixed;
+    background-color: #ffffff;
+    overflow: auto;
+}
+
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: 900;
+}
+
+.post-filters button {
+    margin-left: 10px;
+    padding: 8px;
+    background-color: lightgrey;
+    border: none;
+    cursor: pointer;
+}
+
+.post-filters button:hover {
+    background-color: #ff4500;
+    color: white;
+}
+
+.post-filters button.active {
+    background-color: #ff4500; /* phreddit reddish‑orange */
+    color: white;
+}
+
+.post-count {
+    font-weight: 900;
+}
+
+.header-divider {
+    border: 1px solid black;
+}
+
+.post-list {
+    max-height: 400px;
+    padding-top: 10px;
+}
+
+.post-listing {
+    width: 100%;
+    border-style: none;
+    margin-top: 10px;
+    border-bottom: 1px dotted black;
+    text-align: left;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-listing:hover {
+    text-decoration: underline;
+}
+.post-listing:link {
+    color:black
+}
+.post-listing:visited {
+    color:black
+}
+.post-listing h2 {
+    margin: 5px 0;
+}
+
+.post-meta {
+    font-size: 14px;
+    color: rgb(99, 99, 99);
+    margin-bottom: 5px;
+}
+
+.post-flair {
+    font-style: italic;
+    color: #ff4500;
+    margin-bottom: 5px;
+}
+
+.post-content {
+    margin-bottom: 5px;
+}
+
+.view-comment-count {
+    font-size: 12px;
+    color: rgb(102, 101, 101);
+}
+
+.header-divider {
+    border: 1px solid black;
+}
+
+.link-button {
+    color: black;
+    background: none;
+    border: 1px solid black; /* Add a visible border */
+    cursor: pointer;
+    padding: 4px 8px;
+    font: inherit;
+    border-radius: 4px;
+  }
+
+.link-button:hover {
+    text-decoration: underline;
+}
