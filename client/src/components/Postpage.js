@@ -19,7 +19,7 @@ export default function Postpage({ post, communities, linkflairs, comments, incr
     postcomments.sort((a,b) => b.commentedDate - a.commentedDate);
 
     const flair = linkflairs.find(f => f.linkFlairID === post.linkFlairID);
-    const community = communities.find(c => c.postIDs.includes(post.postID));
+    const community = communities.find(c => c.postIDs.includes(post._id));
 
     return (
         <div className="post-page">

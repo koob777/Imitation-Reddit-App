@@ -2,17 +2,17 @@
 
 export function formatDate(date) {
   // Ensure that the argument date is an actual date
-  const dateObj = new DataTransfer(date);
+  const dateObj = new Date(date);
   if (isNaN(dateObj)) {
     return "Invalid date";
   }
 
   var currentDate = new Date();
-  var yearDifference = currentDate.getFullYear() - date.getFullYear();
-  var monthDifference = currentDate.getMonth() - date.getMonth();
-  var dayDifference = currentDate.getDay() - date.getDay();
-  var minDifference = currentDate.getMinutes() - date.getMinutes();
-  var secDifference = currentDate.getSeconds() - date.getSeconds();
+  var yearDifference = currentDate.getFullYear() - dateObj.getFullYear();
+  var monthDifference = currentDate.getMonth() - dateObj.getMonth();
+  var dayDifference = currentDate.getDay() - dateObj.getDay();
+  var minDifference = currentDate.getMinutes() - dateObj.getMinutes();
+  var secDifference = currentDate.getSeconds() - dateObj.getSeconds();
   if (yearDifference >= 1) {
     return yearDifference + " year(s) ago";
   } else if (monthDifference >= 1) {
