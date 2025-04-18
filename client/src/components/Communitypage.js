@@ -43,7 +43,12 @@ export default function Communitypage({ community, linkflairs, posts, comments, 
                 </div>
             </div>
 
-            <p className="community-description" dangerouslySetInnerHTML={{ __html: community.description }}> </p>
+            <div className="community-description">
+                <p dangerouslySetInnerHTML={{ __html: community.description }}>
+
+                </p>
+            </div>
+
             <p className="community-age">Created {formatDate(community.startDate)}</p>
             <p className="community-post-count">{communityposts.length} posts | {community.memberCount} members</p>
 
