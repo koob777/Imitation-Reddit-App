@@ -35,24 +35,6 @@ export default function NewPostpage({ posts, communities, linkflairs, submitpost
             passed = false;
         }
 
-        /*
-        let thereislf = true;
-        let lk = (existingLinkFlair, newLinkFlair) => {
-            if (existingLinkFlair.trim().length === 0 && newLinkFlair.trim().length === 0) {
-                thereislf = false;
-                return "";
-            }
-            else if (existingLinkFlair.trim().length === 0 && newLinkFlair.trim().length > 0) {
-                return newLinkFlair;
-            }
-            else if (existingLinkFlair.trim().length > 0 && newLinkFlair.trim().length === 0) {
-                return existingLinkFlair;
-            }
-            else {
-                return existingLinkFlair;
-            }
-        };
-        */
 
         if (content.trim().length === 0) {
             setContentError("Post title cannot be empty");
@@ -127,7 +109,6 @@ export default function NewPostpage({ posts, communities, linkflairs, submitpost
 
             
         }
-
 
     };
 

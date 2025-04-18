@@ -73,7 +73,7 @@ export default function Phreddit() {
     fetchData();
    }, []);
 
-  const goingtoPostPage = (post) => {
+   const goingtoPostPage = (post) => {
     setview({view: 'post', post });
   };
 
