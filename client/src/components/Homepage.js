@@ -55,7 +55,7 @@ export default function Homepage({ communities, linkflairs, posts, comments, goT
 
             <div className="post-list">
                 {sortedposts.map((post) => {
-                    const comm = communities.find(c => c.postIDs.includes(post.postID));
+                    const comm = communities.find(c => c.postIDs.includes(post._id));
                     const flair = linkflairs.find(f => f.linkFlairID === post.linkFlairID);
                     const flairsection = (f) => {
                         if (f) {
@@ -72,7 +72,7 @@ export default function Homepage({ communities, linkflairs, posts, comments, goT
                     };
 
                     return (
-                        <a key={post.postID} className="post-listing" onClick={() => goToPostPage(post)} href="#">
+                        <a key={post._id} className="post-listing" onClick={() => goToPostPage(post)} href="#">
                             <div className="post-meta">
                                 {comm ? comm.name : "Unknown Community"} | {post.postedBy} | {formatDate(post.postedDate)}
                             </div>
