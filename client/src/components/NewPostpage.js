@@ -1,5 +1,6 @@
 import { useState } from "react";
 import '../stylesheets/NewPostpage.css';
+import axios from 'axios';
 
 export default function NewPostpage({ posts, communities, linkflairs, submitpost, goToHomePage, addnewlinkflair }) {
     const [selectedCommunity, setSelectedCommunity] = useState('');
@@ -15,7 +16,7 @@ export default function NewPostpage({ posts, communities, linkflairs, submitpost
     const [contentError, setContentError] = useState('');
     const [usernameError, setUsernameError] = useState('');
 
-    const checkinputs = (e) => {
+    const checkinputs = async (e) => {
         e.preventDefault();
         setCommunityError('');
         setTitleError('');
@@ -107,8 +108,24 @@ export default function NewPostpage({ posts, communities, linkflairs, submitpost
                 submitpost(newPost, null, selectedCommunity);
             }
 
-            
+           try {
+            await axios.post('http://localhost:8000/posts', {
+              post: newPost,
+              flair: (flairr.trim().length > 0 ? {
+                linkFlairID: lfid,
+                content: flairr
+              } : null),
+              communityName: selectedCommunity
+            });
+          
+            // Optionally reset state or redirect
+            goToHomePage();
+          } catch (err) {
+            console.error("Failed to create post", err);
+          } 
         }
+        
+          
 
     };
 
