@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import '../stylesheets/Communitypage.css';
-import { getLatestCommentDate, formatDate, getNumofCommsofPost, getNumofCommsofPostHelper } from "./utils.js";
+import { getLatestCommentDate, formatDate, getNumofCommsofPost } from "./utils.js";
 
 
 export default function Communitypage({ community, linkflairs, posts, comments, goToPostPage }) {
@@ -28,7 +28,7 @@ export default function Communitypage({ community, linkflairs, posts, comments, 
             //postscopy.sort((a, b) => a.postedDate - b.postedDate);
             }
             return postscopy;
-        }, [sortOrder, communityposts, comments, posts]);
+        }, [sortOrder, communityposts, comments]);
 
     //START
 
@@ -72,7 +72,7 @@ export default function Communitypage({ community, linkflairs, posts, comments, 
                     };
 
                     return (
-                        <a key={post._id} className="post-listing" onClick={() => goToPostPage(post)} href="#">
+                        <button key={post._id} className="post-listing link-button" onClick={() => goToPostPage(post)}>
                             <div className="post-meta">
                                 {post.postedBy} | {formatDate(post.postedDate)}
                             </div>
@@ -92,7 +92,7 @@ export default function Communitypage({ community, linkflairs, posts, comments, 
                             </div>
 
                             <hr className="header-divider"></hr>
-                        </a>
+                        </button>
                     );
                 })}
             </div>

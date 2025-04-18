@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import '../stylesheets/Homepage.css';
-import { getLatestCommentDate, formatDate, getNumofCommsofPost, getNumofCommsofPostHelper } from "./utils.js";
+import { getLatestCommentDate, formatDate, getNumofCommsofPost } from "./utils.js";
 
 export default function Homepage({ communities, linkflairs, posts, comments, goToPostPage }) {
     const [sortOrder, changeOrder] = useState("newest");
@@ -73,7 +73,7 @@ export default function Homepage({ communities, linkflairs, posts, comments, goT
                     };
 
                     return (
-                        <a key={post._id} className="post-listing" onClick={() => goToPostPage(post)} href="#">
+                        <button key={post._id} className="post-listing link-button" onClick={() => goToPostPage(post)}>
                             <div className="post-meta">
                                 {comm ? comm.name : "Unknown Community"} | {post.postedBy} | {formatDate(post.postedDate)}
                             </div>
@@ -93,7 +93,7 @@ export default function Homepage({ communities, linkflairs, posts, comments, goT
                             </div>
 
                             <hr className="header-divider"></hr>
-                        </a>
+                        </button>
                     );
                 })}
             </div>

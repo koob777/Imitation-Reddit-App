@@ -18,4 +18,6 @@ communitiesSchema.virtual('memberCount').get(function () {
     return this.members.length;
 });
 
+communitiesSchema.set('toJSON', { virtuals: true });
+
 module.exports = mongoose.model('Community', communitiesSchema);

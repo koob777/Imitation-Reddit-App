@@ -5,20 +5,47 @@ import { getLatestCommentDate, formatDate, getNumofCommsofPost } from "./utils.j
 export default function Searchpage({ communities, linkflairs, posts, comments, goToPostPage, searchcontent }) {
     const [sortOrder, changeOrder] = useState("newest");
 
-    const terms = searchcontent.split(' ').filter(term => term.length > 0);
-    let searchposts = [];
-    posts.forEach(post => {
-        const titleMatch = terms.some(term => post.title.includes(term));
-        const contentMatch = terms.some(term => post.content.includes(term));
-        const commentMatch = post.commentIDs.some(commentId => {
-            const comment = comments.find(c => c.commentID === commentId);
-            return comment && terms.some(term => comment.content.includes(term));
-          });
+    /*
+    // const terms = searchcontent.split(' ').filter(term => term.length > 0);
+    // let searchposts = [];
+    // posts.forEach(post => {
+    //     const titleMatch = terms.some(term => post.title.includes(term));
+    //     const contentMatch = terms.some(term => post.content.includes(term));
+    //     const commentMatch = post.commentIDs.some(commentId => {
+    //         const comment = comments.find(c => c.commentID === commentId);
+    //         return comment && terms.some(term => comment.content.includes(term));
+    //       });
 
-        if (titleMatch || contentMatch || commentMatch) {
-            searchposts.push(post);
-        }
-    });
+    //     if (titleMatch || contentMatch || commentMatch) {
+    //         searchposts.push(post);
+    //     }
+    // });
+    const searchposts = useMemo(() => {
+        const terms = searchcontent.split(' ').filter(term => term.length > 0);
+        return posts.filter(post => {
+            const titleMatch = terms.some(term => post.title.includes(term));
+            const contentMatch = terms.some(term => post.content.includes(term));
+            const commentMatch = post.commentIDs.some(commentId => {
+                const comment = comments.find(c => c.commentID === commentId);
+                return comment && terms.some(term => comment.content.includes(term));
+            });
+            return titleMatch || contentMatch || commentMatch;
+        });
+    }, [posts, comments, searchcontent]);
+    */
+
+    const searchposts = useMemo(() => {
+        const terms = searchcontent.split(' ').filter(term => term.length > 0);
+        return posts.filter(post => {
+            const titleMatch = terms.some(term => post.title.includes(term));
+            const contentMatch = terms.some(term => post.content.includes(term));
+            const commentMatch = post.commentIDs.some(commentId => {
+                const comment = comments.find(c => c.commentID === commentId);
+                return comment && terms.some(term => comment.content.includes(term));
+            });
+            return titleMatch || contentMatch || commentMatch;
+        });
+    }, [posts, comments, searchcontent]);
     //posts.filter((post) => community.postIDs.includes(post.postID));
 
     //useMemo should update sortedposts whenever sortorder changes, or when a new post or comment is created.
@@ -41,7 +68,7 @@ export default function Searchpage({ communities, linkflairs, posts, comments, g
             //postscopy.sort((a, b) => a.postedDate - b.postedDate);
             }
             return postscopy;
-        }, [sortOrder, searchposts, comments, posts]);
+        }, [sortOrder, searchposts, comments]);
 
     //START
 
@@ -83,7 +110,7 @@ export default function Searchpage({ communities, linkflairs, posts, comments, g
                     };
 
                     return (
-                        <a key={post.postID} className="post-listing" onClick={() => goToPostPage(post)} href="#">
+                        <button key={post.postID} className="post-listing link-button" onClick={() => goToPostPage(post)}>
                             <div className="post-meta">
                                 {comm.name} | {post.postedBy} | {formatDate(post.postedDate)}
                             </div>
@@ -103,7 +130,7 @@ export default function Searchpage({ communities, linkflairs, posts, comments, g
                             </div>
 
                             <hr className="header-divider"></hr>
-                        </a>
+                        </button>
                     );
                 })}
             </div>
