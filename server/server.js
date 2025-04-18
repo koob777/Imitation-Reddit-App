@@ -16,6 +16,13 @@ app.use(express.json());
 // Connect to MongoDB
 const mongoDB = 'mongodb://127.0.0.1:27017/phreddit';
 mongoose.connect(mongoDB);
+mongoose.connection.on('connected', () => {
+    console.log('Mongoose connected to MongoDB');
+});
+mongoose.connection.on('disconnected', () => {
+    console.log('Mongoose disconnected from MongoDB');
+});
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
@@ -186,11 +193,14 @@ app.post("/increaseviewcount", async (req, res) => {
 const server = app.listen(8000, () => {console.log("Server listening on port 8000...");});
 
 // terminated message
-process.on('SIGINT', () => {
-    server.close(() => {
-        mongoose.connection.close(false, () => {
-            console.log('Server closed. Database instance disconnected.');
-            process.exit(0);
-        });
-    });
+process.on('SIGINT', async () => {
+    try {
+        server.close();
+        await mongoose.connection.close();
+        console.log('Server closed. Database instance disconnected.');
+        process.exit(0);
+    } catch (err) {
+        console.error('Error shutting down server:', err);
+        process.exit(1);
+    }
 });
