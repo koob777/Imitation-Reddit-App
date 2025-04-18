@@ -1,6 +1,12 @@
 
 
 export function formatDate(date) {
+  // Ensure that the argument date is an actual date
+  const dateObj = new DataTransfer(date);
+  if (isNaN(dateObj)) {
+    return "Invalid date";
+  }
+
   var currentDate = new Date();
   var yearDifference = currentDate.getFullYear() - date.getFullYear();
   var monthDifference = currentDate.getMonth() - date.getMonth();
