@@ -18,9 +18,9 @@ export default function NavBar({ currentview, communities, goToCreateCommunityPa
                     {
                         communities.map((c) => (
                             <li key={c._id}>
-                            <a className={("community" in currentview && currentview.community._id === c._id) ? "active-community" : "community-link"} onClick={() => goToCommunityPage(c)}>
+                            <button className={("community" in currentview && currentview.community._id === c._id) ? "active-community" : "community-link"} onClick={() => goToCommunityPage(c)}>
                                 {c.name}
-                            </a>
+                            </button>
                             </li>
                         ))
                     }

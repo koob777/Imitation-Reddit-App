@@ -99,3 +99,17 @@
 .post-content {
     margin-bottom: 5px;
 }
+
+.link-button {
+    color: black;
+    background: none;
+    border: 1px solid black; /* Add a visible border */
+    cursor: pointer;
+    padding: 4px 8px;
+    font: inherit;
+    border-radius: 4px;
+  }
+
+.link-button:hover {
+    text-decoration: underline;
+}
