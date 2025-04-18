@@ -100,6 +100,14 @@
     color: #ff4500;
 }
 
+button.community-link {
+    border: none;
+}
+button.community-link:hover{
+    border: none;
+    color:#ff4500;
+}
+
 .active-community {
     background-color: #ff4500; /* Highlight active community */
     color: white !important; /* Ensure text is visible */
