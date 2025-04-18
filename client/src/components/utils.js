@@ -83,7 +83,7 @@ export function getNumofCommsofPost(post, comments) {
 
 function getNumofCommsofPostHelper(comment, comments, visited) {
   if (visited.has(comment.commentID)) return 0;
-  visited.add(comment.commentID);
+  visited.add(comment._id);
 
   let number = 0;
   for (const comID of comment.commentIDs) {
