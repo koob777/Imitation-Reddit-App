@@ -11,6 +11,7 @@ const Linkflair = require('./models/linkflairs');
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 // Connect to MongoDB
 const mongoDB = 'mongodb://127.0.0.1:27017/phreddit';
@@ -21,7 +22,7 @@ db.once('open', () => {
     console.log('Connected to MongoDB');
 });
 
-// Express route
+// Express routes
 app.get("/communities", async (req,res) => {
     try {
         const communities = await Community.find();
@@ -54,6 +55,70 @@ app.get("/linkflairs", async (req, res) => {
         res.status(500).json({message: err.message});
     }
 });
+// creating 
+// app.post("/communities", async (req,res) => {
+//     const {name,description,members} = req.body;
+//     const newCommunity = new Community({name,description,members});
+//     try {
+//         const createdCommunity = await newCommunity.save();
+//         res.status(201).json(createdCommunity);
+//     } catch (err) {
+//         res.status(400).json({message: err.message});
+//     }
+// });
+app.post("/communities", async (req, res) => {
+    try {
+        let community = req.body;
+        let newcommunityDoc = new Community({
+            name: community.name,
+            description: community.description,
+            postIDs: community.postIDs,
+            startDate: community.startDate,
+            members: community.members,
+        });
+        await newcommunityDoc.save();
+        res.json(newcommunityDoc);
+    }
+    catch (err) {
+        res.status(500).json({message: err.message});
+    }
+});
+app.post("/posts", async (req, res) => {
+    try {
+        const { post, flair, communityName } = req.body;
+
+        let linkFlairId = null;
+
+        // Save the link flair if provided
+        if (flair) {
+            const newFlair = new Linkflair(flair);
+            const savedFlair = await newFlair.save();
+            linkFlairId = savedFlair._id;
+        }
+
+        // Save the post, now with actual MongoDB ObjectId
+        const newPost = new Post({
+            ...post,
+            linkFlairID: linkFlairId,
+        });
+        await newPost.save();
+
+        // Add the post to the corresponding community
+        const community = await Community.findOne({ name: communityName });
+        if (!community) {
+            return res.status(404).json({ message: 'Community not found' });
+        }
+
+        community.postIDs.push(newPost._id);
+        await community.save();
+
+        res.status(201).json({ message: "Post created successfully", post: newPost });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error creating post' });
+    }
+});
+
 
 const server = app.listen(8000, () => {console.log("Server listening on port 8000...");});
 

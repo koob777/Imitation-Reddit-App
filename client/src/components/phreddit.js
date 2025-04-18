@@ -131,7 +131,7 @@ export default function Phreddit() {
     setCommunities(updattedcommunities);
     setview({view: 'community', community: newcommunity});
   };
-
+  
   let submittingcomment = (newcomment, parentID, isreplyToComment, sourcepost) => {
     //const updatedcomments = [...dataComments, newcomment];
     let pcomm = dataComments.find(c => c.commentID === parentID);
