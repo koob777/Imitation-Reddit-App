@@ -1,5 +1,6 @@
 import { useState } from "react";
 import '../stylesheets/NewCommunitypage.css';
+import axios from "axios";
 
 export default function NewCommunitypage({ submitcommunity, goToCommunityPage, communities }) {
     const [communityname, setCommunityName] = useState('');
@@ -10,7 +11,7 @@ export default function NewCommunitypage({ submitcommunity, goToCommunityPage, c
     const [descriptionerror, setDescriptionError] = useState('');
     const [usernameerror, setUsernameError] = useState('');
 
-    const checkinputs = (e) => {
+    const checkinputs = async (e) => {
         e.preventDefault();
         setNameError('');
         setDescriptionError('');
@@ -71,9 +72,21 @@ export default function NewCommunitypage({ submitcommunity, goToCommunityPage, c
               memberCount: 1,
             };
 
+            
+            try {
+                await axios.post('http://localhost:8000/communities', {
+                    community: newCommunity
+                });
+            }
+            catch (err) {
+                console.error("Failed to create community", err);
+            }
 
+            
             //maybe combine both into one
             submitcommunity(newCommunity);
+
+        
         }
     };
 

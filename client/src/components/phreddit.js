@@ -125,11 +125,23 @@ export default function Phreddit() {
     setview({view: 'home'});
   };
 
-  const submittingcommunity = (newcommunity) => {
+  const submittingcommunity = async (newcommunity) => {
     //model.data.communities.push(newcommunity);
+    /*
     const updattedcommunities = [...dataCommunities, newcommunity];
     setCommunities(updattedcommunities);
     setview({view: 'community', community: newcommunity});
+    */
+    try {
+      const updatedcommunities = await axios.get('http://localhost:8000/communities');
+      setCommunities(updatedcommunities.data);
+      const newcommu = updatedcommunities.data.find(c => c.name === newcommunity.name);
+      setview({view: 'community', community: newcommu});
+    }
+    catch (err) {
+      console.error('Error fetching communties: ', err);
+    }
+
   };
   
   let submittingcomment = (newcomment, parentID, isreplyToComment, sourcepost) => {

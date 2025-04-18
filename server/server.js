@@ -68,6 +68,15 @@ app.get("/linkflairs", async (req, res) => {
 // });
 app.post("/communities", async (req, res) => {
     try {
+
+        const { community } = req.body;
+
+        const newcommunity = new Community({
+            ...community,
+        });
+        await newcommunity.save();
+        res.status(201).json({ message: "Community created successfully", community: newcommunity });
+        /* 
         let community = req.body;
         let newcommunityDoc = new Community({
             name: community.name,
@@ -78,6 +87,7 @@ app.post("/communities", async (req, res) => {
         });
         await newcommunityDoc.save();
         res.json(newcommunityDoc);
+        */ 
     }
     catch (err) {
         res.status(500).json({message: err.message});
