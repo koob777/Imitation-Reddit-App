@@ -118,6 +118,41 @@ app.post("/posts", async (req, res) => {
         res.status(500).json({ message: 'Error creating post' });
     }
 });
+app.post("/comments", async (req, res) => {
+    try {
+        console.log("Incoming comment POST:", req.body);
+        const { content, parentID, isReplyToComment, commentedBy } = req.body;
+        const commentIDs = [];
+        const commentedDate = new Date();
+
+        const newComment = new Comment({
+            content,
+            commentIDs,
+            commentedBy,
+            commentedDate
+        });
+        await newComment.save();
+
+        if (isReplyToComment) {
+            const parentComment = await Comment.findById(parentID);
+            if (!parentComment) return res.status(404).json({ message: "Parent Comment not found "});
+
+            parentComment.commentIDs.push(newComment._id);
+            await parentComment.save();
+        } else {
+            const parentPost = await Post.findById(parentID);
+            console.log(parentPost);
+            if (!parentPost) return res.status(404).json({ message: "Parent post not found" });
+
+            parentPost.commentIDs.push(newComment._id);
+            await parentPost.save();
+        }
+        res.status(201).json({ message: "Comment created", comment: newComment });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error creating comment" });
+    }
+});
 
 
 const server = app.listen(8000, () => {console.log("Server listening on port 8000...");});

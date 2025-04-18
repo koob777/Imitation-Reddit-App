@@ -11,7 +11,7 @@ export default function Postpage({ post, communities, linkflairs, comments, incr
 
     const postcomments = [];
     for (const comID of post.commentIDs) {
-        const temp = comments.find(c => c._id.toString() === comID);
+        const temp = comments.find(c => c._id && c._id.toString() === comID);
         if (temp) {
             postcomments.push(temp);
         }
@@ -45,7 +45,7 @@ export default function Postpage({ post, communities, linkflairs, comments, incr
                 Views: {post.views} | Comments: {getNumofCommsofPost(post, comments)}
             </div>
 
-            <button className="comment-button" onClick={() => goToNewCommentPage(post._id, "false", post)}>
+            <button className="comment-button" onClick={() => goToNewCommentPage(post._id, false, post)}>
                 Comment
             </button>
 
@@ -63,7 +63,7 @@ export default function Postpage({ post, communities, linkflairs, comments, incr
 function Comment({ comment, comments, goToNewCommentPage, level, post }) {
     const replies = [];
     for (const comID of comment.commentIDs) {
-        const temp = comments.find(c => c._id.toString() === comID);
+        const temp = comments.find(c => c._id && c._id.toString() === comID);
         if (temp) {
             replies.push(temp);
         }
@@ -80,7 +80,7 @@ function Comment({ comment, comments, goToNewCommentPage, level, post }) {
                 {comment.content}
             </div>
 
-            <button className="reply-button" onClick={() => goToNewCommentPage(comment._id, "true", post)}>
+            <button className="reply-button" onClick={() => goToNewCommentPage(comment._id, true, post)}>
                 Reply
             </button>
 
