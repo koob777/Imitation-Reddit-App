@@ -25,10 +25,10 @@ export default function Searchpage({ communities, linkflairs, posts, comments, g
     let sortedposts = useMemo(() => {
             const postscopy = [...searchposts];
             if (sortOrder === "newest") {
-                postscopy.sort((a, b) => b.postedDate - a.postedDate);
+                postscopy.sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate));
             }
             else if (sortOrder === "oldest") {
-                postscopy.sort((a, b) => a.postedDate - b.postedDate);
+                postscopy.sort((a, b) => new Date(a.postedDate) - new Date(b.postedDate));
             }
             else if (sortOrder === "active") {
             
@@ -66,8 +66,8 @@ export default function Searchpage({ communities, linkflairs, posts, comments, g
 
             <div className="post-list">
                 {sortedposts.map((post) => {
-                    const comm = communities.find(c => c.postIDs.includes(post.postID));
-                    const flair = linkflairs.find(f => f.linkFlairID === post.linkFlairID);
+                    const comm = communities.find(c => c.postIDs.includes(post._id));
+                    const flair = linkflairs.find(f => f._id === post.linkFlairID);
                     const flairsection = (f) => {
                         if (f) {
                             return (

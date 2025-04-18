@@ -6,16 +6,16 @@ import { getLatestCommentDate, formatDate, getNumofCommsofPost, getNumofCommsofP
 export default function Communitypage({ community, linkflairs, posts, comments, goToPostPage }) {
     const [sortOrder, changeOrder] = useState("newest");
 
-    let communityposts = posts.filter((post) => community.postIDs.includes(post.postID));
+    let communityposts = posts.filter((post) => community.postIDs.includes(post._id));
 
     //useMemo should update sortedposts whenever sortorder changes, or when a new post or comment is created.
     let sortedposts = useMemo(() => {
             const postscopy = [...communityposts];
             if (sortOrder === "newest") {
-                postscopy.sort((a, b) => b.postedDate - a.postedDate);
+                postscopy.sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate));
             }
             else if (sortOrder === "oldest") {
-                postscopy.sort((a, b) => a.postedDate - b.postedDate);
+                postscopy.sort((a, b) => new Date(a.postedDate) - new Date(b.postedDate));
             }
             else if (sortOrder === "active") {
                 
@@ -51,7 +51,7 @@ export default function Communitypage({ community, linkflairs, posts, comments, 
 
             <div className="post-list">
                 {sortedposts.map((post) => {
-                    const flair = linkflairs.find(f => f.linkFlairID === post.linkFlairID);
+                    const flair = linkflairs.find(f => f._id === post.linkFlairID);
                     const flairsection = (f) => {
                         if (f) {
                             return (

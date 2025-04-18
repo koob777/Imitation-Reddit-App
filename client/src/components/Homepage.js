@@ -19,10 +19,11 @@ export default function Homepage({ communities, linkflairs, posts, comments, goT
     let sortedposts = useMemo(() => {
         const postscopy = [...posts];
         if (sortOrder === "newest") {
-            postscopy.sort((a, b) => b.postedDate - a.postedDate);
+            postscopy.sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate));
+
         }
         else if (sortOrder === "oldest") {
-            postscopy.sort((a, b) => a.postedDate - b.postedDate);
+            postscopy.sort((a, b) => new Date(a.postedDate) - new Date(b.postedDate));
         }
         else if (sortOrder === "active") {
             

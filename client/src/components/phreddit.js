@@ -81,15 +81,26 @@ export default function Phreddit() {
     setview({view: 'community', community});
   };
 
-  const increaseViewCount = (post) => {
-    let updatedposts = [...dataPosts];
-    updatedposts = updatedposts.filter(p => p.postID !== post.postID);
-    post.views++;
-    updatedposts.push(post);
-    setPosts(updatedposts);
-    setview({...currentview});
-  }
+  // const increaseViewCount = (post) => {
+  //   let updatedposts = [...dataPosts];
+  //   updatedposts = updatedposts.filter(p => p.postID !== post.postID);
+  //   post.views++;
+  //   updatedposts.push(post);
+  //   setPosts(updatedposts);
+  //   setview({...currentview});
+  // }
 
+  const increaseViewCount = (post) => {
+    const updatedposts = dataPosts.map(p => {
+      if (p.postID === post.postID || p._id === post._id) {
+        return { ...p, views: p.views + 1 };
+      }
+      return p;
+    });
+    setPosts(updatedposts);
+    setview({ ...currentview });
+  };
+  
   const goingtoNewCommentPage = (parentID, isReplyToComment, sourcepost) => {
     setview({view: 'new-comment', parentID, isReplyToComment, sourcepost});
   };
@@ -164,7 +175,7 @@ export default function Phreddit() {
     }
     
   };
-
+  
   const gotoSearchpage = (searchquery) => {
     setview({view: 'search', searchquery });
   };

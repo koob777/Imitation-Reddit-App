@@ -41,14 +41,29 @@ export function formatDate(date) {
   }
 }
 
+// export function getLatestCommentDate(post, comments) {
+//   let latestDate = post.postedDate;
+//   post.commentIDs.forEach(commentID => {
+//     const comment = comments.find(c => c._ID === commentID);
+//     if (comment && comment.commentedDate > latestDate) {
+//       latestDate = comment.commentedDate;
+//     }
+//   });
+//   return latestDate;
+// }
 export function getLatestCommentDate(post, comments) {
-  let latestDate = post.postedDate;
+  let latestDate = new Date(post.postedDate);
+
   post.commentIDs.forEach(commentID => {
-    const comment = comments.find(c => c.commentID === commentID);
-    if (comment && comment.commentedDate > latestDate) {
-      latestDate = comment.commentedDate;
+    const comment = comments.find(c => c._ID === commentID);
+    if (comment) {
+      const commentDate = new Date(comment.commentedDate);
+      if (commentDate > latestDate) {
+        latestDate = commentDate;
+      }
     }
   });
+
   return latestDate;
 }
 
