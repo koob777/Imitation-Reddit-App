@@ -58,9 +58,6 @@ export default function NewCommentpage({ isReplyToComment, parentID, submitcomme
                 commentedDate: new Date(),
             }
 
-            submitcomment(newcomment, parentID, isReplyToComment, sourcepost);
-            setContent('');
-            setUsername('');
             try {
                 await axios.post('http://localhost:8000/comments', {
                     ...newcomment,
@@ -69,7 +66,11 @@ export default function NewCommentpage({ isReplyToComment, parentID, submitcomme
                 });
             } catch (err) {
                 console.error("Failed to create comment", err);
-            } 
+            }
+
+            submitcomment(newcomment, parentID, isReplyToComment, sourcepost);
+            setContent('');
+            setUsername('');
         }
     };
 

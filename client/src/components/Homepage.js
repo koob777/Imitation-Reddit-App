@@ -57,7 +57,7 @@ export default function Homepage({ communities, linkflairs, posts, comments, goT
             <div className="post-list">
                 {sortedposts.map((post) => {
                     const comm = communities.find(c => c.postIDs.includes(post._id));
-                    const flair = linkflairs.find(f => f.linkFlairID === post.linkFlairID);
+                    const flair = linkflairs.find(f => f._id === post.linkFlairID);
                     const flairsection = (f) => {
                         if (f) {
                             return (

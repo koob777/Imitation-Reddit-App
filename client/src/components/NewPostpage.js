@@ -95,6 +95,21 @@ export default function NewPostpage({ posts, communities, linkflairs, submitpost
                 views: 0,
             }
 
+            try {
+                await axios.post('http://localhost:8000/posts', {
+                  post: newPost,
+                  flair: (flairr.trim().length > 0 ? {
+                    linkFlairID: lfid,
+                    content: flairr
+                  } : null),
+                  communityName: selectedCommunity
+                });
+              
+                // Optionally reset state or redirect
+              } catch (err) {
+                console.error("Failed to create post", err);
+            } 
+
             if (flairr.trim().length > 0) {
                 const newflair = {
                     linkFlairID: lfid,
@@ -107,26 +122,7 @@ export default function NewPostpage({ posts, communities, linkflairs, submitpost
             else {
                 submitpost(newPost, null, selectedCommunity);
             }
-
-           try {
-            await axios.post('http://localhost:8000/posts', {
-              post: newPost,
-              flair: (flairr.trim().length > 0 ? {
-                linkFlairID: lfid,
-                content: flairr
-              } : null),
-              communityName: selectedCommunity
-            });
-          
-            // Optionally reset state or redirect
-            goToHomePage();
-          } catch (err) {
-            console.error("Failed to create post", err);
-          } 
         }
-        
-          
-
     };
 
     return (
@@ -138,7 +134,7 @@ export default function NewPostpage({ posts, communities, linkflairs, submitpost
                 <select value={selectedCommunity} onChange={(e) => setSelectedCommunity(e.target.value)}>
                     <option value={""}>---Choose one---</option>
                     {communities.map(community => (
-                        <option key={community.communityID} value={community.name}>{community.name}</option>
+                        <option key={community._id} value={community.name}>{community.name}</option>
                     ))}
                 </select>
                 {communityError && (<p className="red-text">{communityError}</p>)}
@@ -155,7 +151,7 @@ export default function NewPostpage({ posts, communities, linkflairs, submitpost
                 <select value={existingLinkFlair} onChange={(e) => setExistingLinkFlair(e.target.value)}>
                     <option value={""}>---Create New/None---</option>
                     {linkflairs.map(f => (
-                        <option key={f.linkFlairID} value={f.content}>{f.content}</option>
+                        <option key={f._id} value={f.content}>{f.content}</option>
                     ))}
                 </select>
                 <p className="label-info">Or create one (30 charcters max)</p>

@@ -163,6 +163,24 @@ app.post("/comments", async (req, res) => {
         res.status(500).json({ message: "Error creating comment" });
     }
 });
+app.post("/increaseviewcount", async (req, res) => {
+    try {
+        const { postid } = req.body;
+        const post = await Post.findOne({ _id: postid });
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+        post.views++;
+        await post.save();
+
+        res.status(201).json({ message: "Post views incremented successfully", post: post });
+        //const community = await Community.findOne({ name: communityName });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error increasing view count" });
+    }
+});
 
 
 const server = app.listen(8000, () => {console.log("Server listening on port 8000...");});
