@@ -1,0 +1,116 @@
+/* Nav Bar Styles */
+.nav-bar {
+    height: calc(100% - 61px);
+    background-color: white;
+    width: 270px;
+    top: 100;
+    bottom: 0;
+    left: 0;
+    margin-top: 5;
+    overflow: auto;
+    position: fixed;
+}
+
+.nav-bar-content {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 0px 20px;
+    align-self: center;
+    text-align: center;
+}
+
+.nav-delimiter {
+    border-bottom: 1px solid black;
+    margin-top: 20px;
+}
+.nav-header {
+    text-align: center;
+    font-weight: 900;
+    font-size: 30px;
+}
+.vertical-divider {
+    position: absolute;
+    left: 269px;
+    top: 0px;
+    bottom: 0px;
+    border-left: 1px solid black;
+}
+
+.home-button {
+    border-radius: 20;
+    font-weight: 900;
+    padding: 15px 40%;
+    background-color: lightgrey;
+    color: black;
+    text-decoration: none;
+    margin-bottom: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+.active-home-button {
+    border-radius: 20;
+    font-weight: 900;
+    padding: 15px 40%;
+    background-color: #ff4500;
+    color: black;
+    text-decoration: none;
+    margin-bottom: 10px;
+    text-align: center;
+    cursor: pointer
+}
+.home-button:hover, .home-button:active {
+    background-color: #ff4500;
+}
+.create-community-button {
+    padding: 8px 16px;
+    background-color: grey;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.active-community-button {
+    padding: 8px 16px;
+    background-color: #ff4500;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.create-community-button:hover {
+    background-color: #ff4500;
+}
+
+.community-list {
+    list-style-type: none;
+    margin-top: 15;
+    padding-left: 0%;
+}
+
+.community-list li {
+    margin-bottom: 20px;
+}
+
+.community-list li a {
+    text-decoration: none;
+    color: black;
+}
+
+.community-list li a:hover {
+    color: #ff4500;
+}
+
+button.community-link {
+    border: none;
+}
+button.community-link:hover{
+    border: none;
+    color:#ff4500;
+}
+
+.active-community {
+    background-color: #ff4500; /* Highlight active community */
+    color: white !important; /* Ensure text is visible */
+    font-weight: bold;
+    border-radius: 5px;
+}
